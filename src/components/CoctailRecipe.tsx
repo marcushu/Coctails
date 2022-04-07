@@ -75,7 +75,7 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
         </Typography>
         <Box sx={{ bottom: '5px', position: ['unset', 'absolute'], paddingTop: ['20px', '0px'] }}>
           {getIngredients().map(ing =>
-            <Typography fontStyle='italic' fontSize='14px' fontWeight='bold' color='#FFF3DC'>
+            <Typography key={ing} fontStyle='italic' fontSize='14px' fontWeight='bold' color='#FFF3DC'>
               {ing}
             </Typography>)}
         </Box>
