@@ -5,18 +5,29 @@ import { useState } from 'react';
 import SearchForm from './components/SearchForm';
 import { DrinkType, SearchResult } from './types';
 import SearchResults from './components/SearchResults';
+import NullCoctail from './components/NullCoctail';
 
 const APIurl = process.env.REACT_APP_COCTAIL_API
 
 function App() {
   const [searchResults, setSearchResults] = useState<SearchResult[] | DrinkType[]>([]);
+  const [badSearchTearm, setBadSearchTearm] = useState("");
 
   const callSearch = (tearm: string, byName: boolean) => {
     const endPoint = byName ? "search.php?s=" : "filter.php?i=";
 
+    setBadSearchTearm("");
+    setSearchResults([]); // clear out old results
+
     fetch(APIurl + endPoint + tearm)
       .then(res => res.json())
-      .then(data => setSearchResults(data.drinks));
+      .then(data => { 
+        if (!!data.drinks.length)
+          setSearchResults(data.drinks);
+      })
+      .catch(error => {
+        setBadSearchTearm(tearm);
+      })
   }
 
   return (
@@ -39,7 +50,9 @@ function App() {
       </Box>
       <Box position='absolute' top={['67%', '90%']} width='90%' pb={5}>
         <SearchForm callback={callSearch} />
-        {!!searchResults && <SearchResults coctails={searchResults} />}
+        {badSearchTearm.length
+        ? <NullCoctail searchString={badSearchTearm} />
+        : <SearchResults coctails={searchResults} />}
       </Box>
     </Container>
   );
