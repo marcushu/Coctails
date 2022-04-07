@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from '@mui/material';
 import martiniImg from './images/martini.png';
 import './App.css';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import SearchForm from './components/SearchForm';
 import { DrinkType, SearchResult } from './types';
 import SearchResults from './components/SearchResults';
@@ -12,6 +12,8 @@ const APIurl = process.env.REACT_APP_COCTAIL_API
 function App() {
   const [searchResults, setSearchResults] = useState<SearchResult[] | DrinkType[]>([]);
   const [badSearchTearm, setBadSearchTearm] = useState("");
+  const resultRef = useRef<HTMLDivElement>(null);
+
 
   const callSearch = async (tearm: string, byName: boolean) => {
     const endPoint = byName ? "search.php?s=" : "filter.php?i=";
@@ -23,10 +25,14 @@ function App() {
       const res = await fetch(APIurl + endPoint + tearm);
       const data = await res.json();
 
-      if (!!data.drinks.length)
+      if (!!data.drinks.length) {
         setSearchResults(data.drinks);
+      }
     } catch (error) {
       setBadSearchTearm(tearm);
+    } finally {
+      if(resultRef.current)
+          resultRef.current.scrollIntoView({behavior: "smooth", block: "start"});
     }
   }
 
@@ -48,7 +54,7 @@ function App() {
           drink
         </Typography>
       </Box>
-      <Box position='absolute' top={['67%', '90%']} width='90%' pb={5}>
+      <Box position='absolute' top={['67%', '90%']} width='90%' pb={5} ref={resultRef}>
         <SearchForm callback={callSearch} />
         {badSearchTearm.length
           ? <NullCoctail searchString={badSearchTearm} />
