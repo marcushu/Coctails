@@ -61,7 +61,7 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
   return (
     <Grid container onClick={() => hideMe(false)} my={5}
       sx={{ ":hover": { cursor: 'pointer' } }}>
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={4} minWidth='180px' minHeight='180px'>
         {drinkInfo?.strDrinkThumb &&
           <img width='100%' src={drinkInfo?.strDrinkThumb} alt="drikimage"
             style={{ borderRadius: '40px 0px 0px' }} />}
