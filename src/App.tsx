@@ -13,21 +13,21 @@ function App() {
   const [searchResults, setSearchResults] = useState<SearchResult[] | DrinkType[]>([]);
   const [badSearchTearm, setBadSearchTearm] = useState("");
 
-  const callSearch = (tearm: string, byName: boolean) => {
+  const callSearch = async (tearm: string, byName: boolean) => {
     const endPoint = byName ? "search.php?s=" : "filter.php?i=";
 
     setBadSearchTearm("");
-    setSearchResults([]); // clear out old results
+    setSearchResults([]); // clear out any old results
 
-    fetch(APIurl + endPoint + tearm)
-      .then(res => res.json())
-      .then(data => { 
-        if (!!data.drinks.length)
-          setSearchResults(data.drinks);
-      })
-      .catch(error => {
-        setBadSearchTearm(tearm);
-      })
+    try {
+      const res = await fetch(APIurl + endPoint + tearm);
+      const data = await res.json();
+
+      if (!!data.drinks.length)
+        setSearchResults(data.drinks);
+    } catch (error) {
+      setBadSearchTearm(tearm);
+    }
   }
 
   return (
@@ -51,8 +51,8 @@ function App() {
       <Box position='absolute' top={['67%', '90%']} width='90%' pb={5}>
         <SearchForm callback={callSearch} />
         {badSearchTearm.length
-        ? <NullCoctail searchString={badSearchTearm} />
-        : <SearchResults coctails={searchResults} />}
+          ? <NullCoctail searchString={badSearchTearm} />
+          : <SearchResults coctails={searchResults} />}
       </Box>
     </Container>
   );
