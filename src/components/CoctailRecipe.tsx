@@ -46,6 +46,18 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
     return ingList;
   }
 
+  const capitalized = () => {
+    if (drinkInfo?.strInstructions)
+      return <>
+        <Typography sx={{ display: 'inline' }} color='#FFF3DC' fontSize='24px'>
+          {(drinkInfo?.strInstructions)?.slice(0, 1)}
+        </Typography>
+        <Typography sx={{ display: 'inline' }} color='#bdbdbd' fontSize='16px' fontWeight='light'>
+          {(drinkInfo?.strInstructions)?.slice(1)}
+        </Typography>
+      </>
+  }
+
   return (
     <Grid container onClick={() => hideMe(false)} my={5}
       sx={{ ":hover": { cursor: 'pointer' } }}>
@@ -69,9 +81,7 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
         </Box>
       </Grid>
       <Grid item xs={12} pt={2}>
-        <Typography color='#bdbdbd' fontSize='16px' fontWeight='light'>
-          {drinkInfo?.strInstructions}
-        </Typography>
+        {capitalized()}
       </Grid>
     </Grid>
   );
