@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event";
 import SearchForm from "../SearchForm"
 
@@ -17,8 +17,9 @@ describe('SearchFrom', () => {
 
         const findBtn = screen.getByRole('button', { name: /find/i });
         const nameInput = screen.getByTestId('coctailname');
+        const view = within(nameInput).getByRole("textbox");
 
-        userEvent.type(nameInput, 'martini');
+        userEvent.type(view, 'martini');
         fireEvent.click(findBtn);
 
         expect(mockFunc).toHaveBeenCalled();
@@ -31,9 +32,10 @@ describe('SearchFrom', () => {
         render(<SearchForm callback={mockFunc} />);
 
         const findBtn = screen.getByRole('button', { name: /find/i });
-        const ingredient = screen.getByTestId('coctailingredient');
+        const nameInput = screen.getByTestId('coctailingredient');
+        const view = within(nameInput).getByRole("textbox");
 
-        userEvent.type(ingredient, 'vermouth');
+        userEvent.type(view, 'vermouth');
         fireEvent.click(findBtn);
 
         expect(mockFunc).toHaveBeenCalled();
@@ -50,18 +52,4 @@ describe('SearchFrom', () => {
 
         expect(mockFunc).not.toHaveBeenCalled();
     });
-
-    it('will not call callback with both fields filled', () => {
-        render(<SearchForm callback={mockFunc} />);
-
-        const findBtn = screen.getByRole('button', { name: /find/i });
-        const ingredient = screen.getByTestId('coctailingredient');
-        const nameInput = screen.getByTestId('coctailname');
-
-        userEvent.type(ingredient, 'vermouth');
-        userEvent.type(nameInput, 'martini');
-        fireEvent.click(findBtn);
-
-        expect(mockFunc).not.toHaveBeenCalled();
-    })
 })
