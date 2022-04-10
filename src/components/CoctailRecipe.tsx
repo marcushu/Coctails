@@ -1,5 +1,5 @@
 import { Box, Grid, Grow, Typography } from "@mui/material";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { DrinkType } from "../types";
 
 const APIurl = process.env.REACT_APP_COCTAIL_API
@@ -12,6 +12,7 @@ interface CoctailRecipeProps {
 const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) => {
   const [drinkInfo, setDrinkInfo] = useState<DrinkType>();
   const [reveal, setReveal] = useState(false);
+  const recipeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchCoctailInfo = async () => {
@@ -20,6 +21,10 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
         const data = await result.json();
 
         setDrinkInfo(data.drinks[0]);
+
+        if (recipeRef.current)
+          recipeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+
         setReveal(true);
       } catch (error) {
         console.log(error);
@@ -76,7 +81,7 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
           <Typography color='white' fontSize='12px' fontWeight='light'>
             {drinkInfo?.strGlass}
           </Typography>
-          <Box sx={{ bottom: '5px', position: ['unset', 'absolute'], paddingTop: ['20px', '0px'] }}>
+          <Box ref={recipeRef} sx={{ bottom: '5px', position: ['unset', 'absolute'], paddingTop: ['20px', '0px'] }}>
             {getIngredients().map(ing =>
               <Typography key={ing} fontStyle='italic' fontSize='14px' fontWeight='bold' color='#FFF3DC'>
                 {ing}
