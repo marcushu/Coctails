@@ -1,4 +1,4 @@
-import { Box, Grid, Grow, Typography } from "@mui/material";
+import { Box, Grid, Grow, Skeleton, Typography } from "@mui/material";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { DrinkType } from "../types";
 
@@ -70,9 +70,11 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
       <Grid container onClick={() => hideMe(false)} my={5}
         sx={{ ":hover": { cursor: 'pointer' } }}>
         <Grid item xs={12} sm={4} minWidth='180px' minHeight='180px'>
-          {drinkInfo?.strDrinkThumb &&
-            <img width='100%' src={drinkInfo?.strDrinkThumb} alt="drikimage"
-              style={{ borderRadius: '40px 0px 0px' }} />}
+          {drinkInfo?.strDrinkThumb 
+            ? <img width='100%' src={drinkInfo?.strDrinkThumb} alt="drikimage"
+              style={{ borderRadius: '40px 0px 0px' }} />
+            : <Skeleton width='100%' variant='rectangular' />  
+          }
         </Grid>
         <Grid item xs={12} sm={8} pl={[0, 2]} position='relative'>
           <Typography color='#938E8E' fontFamily='Bodoni Moda' fontStyle='italic' fontSize='40px'>
