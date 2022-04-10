@@ -22,9 +22,6 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
 
         setDrinkInfo(data.drinks[0]);
 
-        if (recipeRef.current)
-          recipeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-
         setReveal(true);
       } catch (error) {
         console.log(error);
@@ -65,8 +62,13 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
       </>
   }
 
+  const afterGrow = () => {
+    if (recipeRef.current)
+    recipeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
   return (
-    <Grow in={reveal}>
+    <Grow in={reveal} addEndListener={afterGrow}>
       <Grid container onClick={() => hideMe(false)} my={5}
         sx={{ ":hover": { cursor: 'pointer' } }}>
         <Grid item xs={12} sm={4} minWidth='180px' minHeight='180px'>
