@@ -23,7 +23,7 @@ const SearchResults: FunctionComponent<SearchResultsProps> = ({ coctails }) => {
   return (
     <Box maxWidth='700px' margin='auto' pt={3} ref={listRef}>
       {coctails.length === 1 
-      ? <CoctailRecipe id={coctails[0].idDrink} hideMe={Function.prototype()}/>
+      ? <CoctailRecipe id={coctails[0].idDrink} hideMe={null}/>
       : coctails.map(drink => <DrindThumbnail key={drink.idDrink} drink={drink} />)} 
     </Box>
   );

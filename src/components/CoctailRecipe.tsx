@@ -6,7 +6,7 @@ const APIurl = process.env.REACT_APP_COCTAIL_API
 
 interface CoctailRecipeProps {
   id: number
-  hideMe: React.Dispatch<React.SetStateAction<boolean>>
+  hideMe: React.Dispatch<React.SetStateAction<boolean>> | null
 }
 
 const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) => {
@@ -68,14 +68,15 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
         recipeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     } else {
       setTimeout(() => { //FIXME: necessary?
-        hideMe(false); // remove the node
+        if (hideMe)
+          hideMe(false); // remove the node
       }, 500);
     }
   }
 
   return (
     <Grow in={reveal} timeout={750} addEndListener={afterTransition}>
-      <Grid container onClick={() => setReveal(false)} my={5}
+      <Grid container onClick={() => { if (hideMe) setReveal(false) }} my={5}
         sx={{ ":hover": { cursor: 'pointer' } }}>
         <Grid item xs={12} sm={4} minWidth='180px' minHeight='180px'>
           {drinkInfo?.strDrinkThumb
