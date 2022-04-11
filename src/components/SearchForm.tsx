@@ -1,5 +1,6 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogContentText, DialogTitle, TextField, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
+import WarningIcon from '@mui/icons-material/Warning';
 
 interface SearchFormProps {
   callback: (tearm: string, byName: boolean) => void
@@ -8,12 +9,12 @@ interface SearchFormProps {
 const SearchForm: FunctionComponent<SearchFormProps> = ({ callback }) => {
   const [searchByNameTxt, setSearchByNameTxt] = useState("");
   const [ingredientTxt, setingredientTxt] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
 
   const callSearch = () => {
-    if (!searchByNameTxt && !ingredientTxt) {
-      alert("Fill in a name or an ingredeint")
-    } else if (searchByNameTxt && ingredientTxt) {
-      alert('Fill in EITHER a coctail name OR an ingredient')
+    // note: the second condition should not be possible
+    if ((!searchByNameTxt && !ingredientTxt) || (searchByNameTxt && ingredientTxt)) {
+      setShowDialog(true);
     } else {
       callback(searchByNameTxt! + ingredientTxt, !!searchByNameTxt)
     }
@@ -66,6 +67,15 @@ const SearchForm: FunctionComponent<SearchFormProps> = ({ callback }) => {
         }}>
         find
       </Button>
+      <Dialog open={showDialog} onClose={() => setShowDialog(false)}
+        sx={{ textAlign: 'center' }}>
+        <DialogTitle>
+          <WarningIcon sx={{ color: '#ffa000' }} fontSize="large" />
+        </DialogTitle>
+        <DialogContentText p={4}>
+          PLEASE ENTER EITHER AN INGREDIENT OR A COCTAIL NAME.
+        </DialogContentText>
+      </Dialog>
     </Box>
   );
 }
