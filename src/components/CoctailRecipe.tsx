@@ -62,20 +62,26 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
       </>
   }
 
-  const afterGrow = () => {
-    if (recipeRef.current)
-    recipeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  const afterTransition = () => {
+    if (reveal) {
+      if (recipeRef.current)
+        recipeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      setTimeout(() => { //FIXME: necessary?
+        hideMe(false); // remove the node
+      }, 500);
+    }
   }
 
   return (
-    <Grow in={reveal} addEndListener={afterGrow}>
-      <Grid container onClick={() => hideMe(false)} my={5}
+    <Grow in={reveal} timeout={750} addEndListener={afterTransition}>
+      <Grid container onClick={() => setReveal(false)} my={5}
         sx={{ ":hover": { cursor: 'pointer' } }}>
         <Grid item xs={12} sm={4} minWidth='180px' minHeight='180px'>
-          {drinkInfo?.strDrinkThumb 
+          {drinkInfo?.strDrinkThumb
             ? <img width='100%' src={drinkInfo?.strDrinkThumb} alt="drikimage"
               style={{ borderRadius: '40px 0px 0px' }} />
-            : <Skeleton width='100%' variant='rectangular' />  
+            : <Skeleton width='100%' variant='rectangular' />
           }
         </Grid>
         <Grid item xs={12} sm={8} pl={[0, 2]} position='relative'>
