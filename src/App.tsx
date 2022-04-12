@@ -39,22 +39,25 @@ function App() {
         backgroundImage: `url(${martiniImg})`, minHeight: '100vh', backgroundRepeat: 'no-repeat',
         backgroundSize: { xs: 'unset', md: 'contain' }, backgroundPosition: 'top', position: 'relative'
       }}>
-      <Box position='absolute' top='20%' marginLeft={['20px', '80px']}>
-        <Typography fontSize='65px' sx={{ color: '#9A9A9A' }} fontWeight='lighter'>
-          Have
-        </Typography>
-        <Typography fontWeight='lighter' fontSize='48px' sx={{ color: '#9A9A9A' }} fontStyle='italic'>
-          &nbsp;&nbsp;a
-        </Typography>
-        <Typography fontSize='120px' fontStyle='italic' sx={{ color: 'white' }} fontFamily='Bodoni Moda'>
-          drink
-        </Typography>
-      </Box>
-      <Box position='absolute' top={['67%', '90%']} width='90%' pb={5}>
-        <SearchForm callback={callSearch} />
-        {badSearchTearm.length
-          ? <NullCoctail searchString={badSearchTearm} />
-          : <SearchResults coctails={searchResults} />}
+      <Box width='100%'>
+        <Box marginLeft={['0px', '80px']} paddingTop={['60px', '20%']}>
+          <Typography fontSize='65px' sx={{ color: '#9A9A9A' }} fontWeight='lighter'>
+            Have
+          </Typography>
+          <Typography fontWeight='lighter' fontSize='48px' sx={{ color: '#9A9A9A' }} fontStyle='italic'>
+            &nbsp;&nbsp;a
+          </Typography>
+          <Typography fontSize='120px' fontStyle='italic' sx={{ color: 'white' }} fontFamily='Bodoni Moda'>
+            drink
+          </Typography>
+        </Box>
+        <Box width='100%'
+          sx={{ marginTop: '50px', position: ['unset', 'absolute'], bottom: ['unset', '10px'] }}>
+          <SearchForm callback={callSearch} />
+          {badSearchTearm.length
+            ? <NullCoctail searchString={badSearchTearm} />
+            : <SearchResults coctails={searchResults} />}
+        </Box>
       </Box>
     </Container>
   );
