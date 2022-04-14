@@ -40,20 +40,23 @@ function App() {
         backgroundSize: { xs: 'unset', md: 'contain' }, backgroundPosition: 'top', position: 'relative'
       }}>
       <Box width='100%'>
-        <Box marginLeft={['0px', '80px']} paddingTop={['60px', '20%']}>
-          <Typography fontSize='65px' sx={{ color: '#9A9A9A' }} fontWeight='lighter'>
-            Have
-          </Typography>
-          <Typography fontWeight='lighter' fontSize='48px' sx={{ color: '#9A9A9A' }} fontStyle='italic'>
-            &nbsp;&nbsp;a
-          </Typography>
-          <Typography fontSize='120px' fontStyle='italic' sx={{ color: 'white' }} fontFamily='Bodoni Moda'>
-            drink
-          </Typography>
+        <Box display='flex' flexDirection='column' height='100vh' justifyContent='space-around'>
+          <Box marginLeft={['0px', '80px']} paddingTop={['60px', '20%']}>
+            <Typography fontSize='65px' sx={{ color: '#9A9A9A' }} fontWeight='lighter'>
+              Have
+            </Typography>
+            <Typography fontWeight='lighter' fontSize='48px' sx={{ color: '#9A9A9A' }} fontStyle='italic'>
+              &nbsp;&nbsp;a
+            </Typography>
+            <Typography fontSize='120px' fontStyle='italic' sx={{ color: 'white' }} fontFamily='Bodoni Moda'>
+              drink
+            </Typography>
+          </Box>
+          <Box>
+            <SearchForm callback={callSearch} />
+          </Box>
         </Box>
-        <Box width='100%'
-          sx={{ marginTop: '50px', position: ['unset', 'absolute'], bottom: ['unset', '10px'] }}>
-          <SearchForm callback={callSearch} />
+        <Box width='100%' sx={{ marginTop: '50px' }}>
           {badSearchTearm.length
             ? <NullCoctail searchString={badSearchTearm} />
             : <SearchResults coctails={searchResults} />}
