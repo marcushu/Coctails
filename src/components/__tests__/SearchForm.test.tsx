@@ -43,6 +43,27 @@ describe('SearchFrom', () => {
         expect(mockFunc.mock.calls[0][1]).toBe(false);
     });
 
+    it('only calls with information from a single text field', () => {
+        render(<SearchForm callback={mockFunc} />);
+   
+        const ingredient = screen.getByTestId('coctailingredient');
+        const ingredientView = within(ingredient).getByRole("textbox");
+        const nameInput = screen.getByTestId('coctailname');
+        const nameView = within(nameInput).getByRole("textbox");   
+
+        // load data in the name field, this will be ignored
+        userEvent.type(nameView, 'martini');
+        // load data in ingredient field, this should delete the above
+        userEvent.type(ingredientView, 'tequila');
+
+        const findBtn = screen.getByRole('button', { name: /find/i });
+        fireEvent.click(findBtn);
+
+        expect(mockFunc).toHaveBeenCalled();
+        expect(mockFunc.mock.calls[0][0]).toBe('tequila');
+
+    });
+
     it('will not call the callback without input values', () => {
         render(<SearchForm callback={mockFunc} />);
 
