@@ -56,7 +56,7 @@ function App() {
             <SearchForm callback={callSearch} />
           </Box>
         </Box>
-        <Box width='100%' sx={{ marginTop: '50px' }}>
+        <Box width='100%'>
           {badSearchTearm.length
             ? <NullCoctail searchString={badSearchTearm} />
             : <SearchResults coctails={searchResults} />}
