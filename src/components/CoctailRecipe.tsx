@@ -75,26 +75,56 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
   }
 
   return (
-    <Grow in={reveal} timeout={750} addEndListener={afterTransition}>
-      <Grid container onClick={() => { if (hideMe) setReveal(false) }} my={5}
+    <Grow
+      in={reveal}
+      timeout={750}
+      addEndListener={afterTransition}>
+      <Grid
+        container
+        onClick={() => { if (hideMe) setReveal(false) }}
+        my={5}
         sx={{ ":hover": { cursor: 'pointer' } }}>
-        <Grid item xs={12} sm={4} minWidth='180px' minHeight='180px'>
+        <Grid
+          item
+          xs={12}
+          sm={4}
+          minWidth='180px'
+          minHeight='180px'>
           {drinkInfo?.strDrinkThumb
             ? <img width='100%' src={drinkInfo?.strDrinkThumb} alt="drikimage"
               style={{ borderRadius: '40px 0px 0px' }} />
             : <Skeleton width='100%' variant='rectangular' />
           }
         </Grid>
-        <Grid item xs={12} sm={8} pl={[0, 2]} position='relative'>
-          <Typography color='#938E8E' fontFamily='Bodoni Moda' fontStyle='italic' fontSize='40px'>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          pl={[0, 2]}
+          position='relative'>
+          <Typography
+            color='#938E8E'
+            fontFamily='Bodoni Moda'
+            fontStyle='italic'
+            fontSize='40px'>
             {drinkInfo?.strDrink}
           </Typography>
-          <Typography color='white' fontSize='12px' fontWeight='light'>
+          <Typography
+            color='white'
+            fontSize='12px'
+            fontWeight='light'>
             {drinkInfo?.strGlass}
           </Typography>
-          <Box ref={recipeRef} sx={{ bottom: '5px', position: ['unset', 'absolute'], paddingTop: ['20px', '0px'] }}>
+          <Box
+            ref={recipeRef}
+            sx={{ bottom: '5px', position: ['unset', 'absolute'], paddingTop: ['20px', '0px'] }}>
             {getIngredients().map(ing =>
-              <Typography key={ing} fontStyle='italic' fontSize='14px' fontWeight='bold' color='#FFF3DC'>
+              <Typography
+                key={ing}
+                fontStyle='italic'
+                fontSize='14px'
+                fontWeight='bold'
+                color='#FFF3DC'>
                 {ing}
               </Typography>)}
           </Box>

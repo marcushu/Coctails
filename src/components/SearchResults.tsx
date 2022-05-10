@@ -38,7 +38,7 @@ const SearchResults: FunctionComponent<SearchResultsProps> = ({ coctails }) => {
 
 
   return (
-    <>
+    <Box pb={5}>
       <Box
         maxWidth='700px'
         margin='auto'
@@ -63,7 +63,7 @@ const SearchResults: FunctionComponent<SearchResultsProps> = ({ coctails }) => {
               }
             }} />
         </Box>}
-    </>
+    </Box>
   );
 }
 

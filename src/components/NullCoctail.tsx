@@ -10,14 +10,22 @@ const NullCoctail: FunctionComponent<NullCoctailProps> = ({ searchString }) => {
   const thisRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(thisRef.current)
-      thisRef.current.scrollIntoView({behavior: "smooth", block: "start"});
+    if (thisRef.current)
+      thisRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
-  
+
   return (
-    <Box textAlign='center' py={5} ref={thisRef}>
-      <SentimentVeryDissatisfiedIcon fontSize="large" sx={{ color: '#ff5959', verticalAlign: 'bottom' }} />
-      <Typography variant="h5" color="#ff5959" display='inline'>&nbsp;
+    <Box
+      textAlign='center'
+      py={5}
+      ref={thisRef}>
+      <SentimentVeryDissatisfiedIcon
+        fontSize="large"
+        sx={{ color: '#ff5959', verticalAlign: 'bottom' }} />
+      <Typography
+        variant="h5"
+        color="#ff5959"
+        display='inline'>&nbsp;
         Nothing found with {searchString}
       </Typography>
     </Box>

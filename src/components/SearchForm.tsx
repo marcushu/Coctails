@@ -67,7 +67,9 @@ const SearchForm: FunctionComponent<SearchFormProps> = ({ callback }) => {
         }}>
         find
       </Button>
-      <Dialog open={showDialog} onClose={() => setShowDialog(false)}
+      <Dialog
+        open={showDialog}
+        onClose={() => setShowDialog(false)}
         sx={{ textAlign: 'center' }}>
         <DialogTitle>
           <WarningIcon sx={{ color: '#ffa000' }} fontSize="large" />

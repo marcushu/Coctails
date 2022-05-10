@@ -40,15 +40,30 @@ function App() {
         backgroundSize: { xs: 'unset', md: 'contain' }, backgroundPosition: 'top', position: 'relative'
       }}>
       <Box width='100%'>
-        <Box display='flex' flexDirection='column' height='100vh' justifyContent='space-around'>
+        <Box
+          display='flex'
+          flexDirection='column'
+          height='100vh'
+          justifyContent='space-around'>
           <Box marginLeft={['0px', '80px']} paddingTop={['60px', '20%']}>
-            <Typography fontSize='65px' sx={{ color: '#9A9A9A' }} fontWeight='lighter'>
+            <Typography
+              fontSize='65px'
+              color='#9A9A9A'
+              fontWeight='lighter'>
               Have
             </Typography>
-            <Typography fontWeight='lighter' fontSize='48px' sx={{ color: '#9A9A9A' }} fontStyle='italic'>
+            <Typography
+              fontWeight='lighter'
+              fontSize='48px'
+              color='#9A9A9A'
+              fontStyle='italic'>
               &nbsp;&nbsp;a
             </Typography>
-            <Typography fontSize='120px' fontStyle='italic' sx={{ color: 'white' }} fontFamily='Bodoni Moda'>
+            <Typography
+              fontSize='120px'
+              fontStyle='italic'
+              color='white'
+              fontFamily='Bodoni Moda'>
               drink
             </Typography>
           </Box>
