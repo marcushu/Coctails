@@ -52,14 +52,16 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
 
   const capitalized = () => {
     if (drinkInfo?.strInstructions)
-      return <>
-        <Typography sx={{ display: 'inline' }} color='#FFF3DC' fontSize='24px'>
-          {(drinkInfo?.strInstructions)?.slice(0, 1)}
-        </Typography>
-        <Typography sx={{ display: 'inline' }} color='#bdbdbd' fontSize='16px' fontWeight='light'>
-          {(drinkInfo?.strInstructions)?.slice(1)}
-        </Typography>
-      </>
+      return (
+        <>
+          <Typography sx={{ display: 'inline' }} color='#FFF3DC' fontSize='24px'>
+            {(drinkInfo?.strInstructions)?.slice(0, 1)}
+          </Typography>
+          <Typography sx={{ display: 'inline' }} color='#bdbdbd' fontSize='16px' fontWeight='light'>
+            {(drinkInfo?.strInstructions)?.slice(1)}
+          </Typography>
+        </>
+      );
   }
 
   const afterTransition = () => {
@@ -93,31 +95,35 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
           {drinkInfo?.strDrinkThumb
             ? <img width='100%' src={drinkInfo?.strDrinkThumb} alt="drikimage"
               style={{ borderRadius: '40px 0px 0px' }} />
-            : <Skeleton width='100%' variant='rectangular' />
-          }
+            : <Skeleton width='100%' variant='rectangular' />}
         </Grid>
         <Grid
           item
           xs={12}
           sm={8}
           pl={[0, 2]}
-          position='relative'>
-          <Typography
-            color='#938E8E'
-            fontFamily='Bodoni Moda'
-            fontStyle='italic'
-            fontSize='40px'>
-            {drinkInfo?.strDrink}
-          </Typography>
-          <Typography
-            color='white'
-            fontSize='12px'
-            fontWeight='light'>
-            {drinkInfo?.strGlass}
-          </Typography>
+          pb={1}
+          display='flex'
+          flexDirection='column'
+          justifyContent='space-between'>
+          <Box>
+            <Typography
+              color='#938E8E'
+              fontFamily='Bodoni Moda'
+              fontStyle='italic'
+              fontSize='40px'>
+              {drinkInfo?.strDrink}
+            </Typography>
+            <Typography
+              color='white'
+              fontSize='12px'
+              fontWeight='light'>
+              {drinkInfo?.strGlass}
+            </Typography>
+          </Box>
           <Box
             ref={recipeRef}
-            sx={{ bottom: '5px', position: ['unset', 'absolute'], paddingTop: ['20px', '0px'] }}>
+            sx={{ bottom: '5px', paddingTop: ['20px', '0px'] }}>
             {getIngredients().map(ing =>
               <Typography
                 key={ing}
