@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: home/runner/work/Coctails/Coctails/cypress/videos/basicUsagespec.cy.ts.mp4
+          path: /home/runner/work/Coctails/Coctails/cypress/videos/basicUsagespec.cy.ts.mp4
