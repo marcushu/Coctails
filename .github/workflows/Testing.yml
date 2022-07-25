@@ -25,3 +25,9 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 160 # seconds
           config: 'baseUrl=http://localhost:3000'
+
+      - name: upload artifacts
+        uses: actions/checkout@v2
+        with:
+          name: test-results
+          path: home/runner/work/Coctails/Coctails/cypress/videos/basicUsagespec.cy.ts.mp4
