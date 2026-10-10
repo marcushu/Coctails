@@ -6,10 +6,10 @@ const APIurl = process.env.REACT_APP_COCTAIL_API
 
 interface CoctailRecipeProps {
   id: number
-  hideMe: React.Dispatch<React.SetStateAction<boolean>> | null
+  onClose: (() => void) | null
 }
 
-const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) => {
+const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, onClose }) => {
   const [drinkInfo, setDrinkInfo] = useState<DrinkType>();
   const [reveal, setReveal] = useState(false);
   const recipeRef = useRef<HTMLDivElement>(null);
@@ -20,15 +20,19 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
         const result = await fetch(`${APIurl}lookup.php?i=${id}`);
         const data = await result.json();
 
-        setDrinkInfo(data.drinks[0]);
+        const drink = data.drinks[0];
+        setDrinkInfo(drink);
 
-        setReveal(true);
+        if (!drink.strDrinkThumb)
+          setReveal(true);
       } catch (error) {
         console.log(error);
         alert('Error collecting information about this coctail.');
       }
     }
 
+    setReveal(false);
+    setDrinkInfo(undefined);
     fetchCoctailInfo();
   }, [id]);
 
@@ -70,8 +74,8 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
         recipeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     } else {
       setTimeout(() => { //FIXME: necessary?
-        if (hideMe)
-          hideMe(false); // remove the node
+        if (onClose)
+          onClose(); // remove the node
       }, 500);
     }
   }
@@ -83,7 +87,7 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
       addEndListener={afterTransition}>
       <Grid
         container
-        onClick={() => { if (hideMe) setReveal(false) }}
+        onClick={() => { if (onClose) setReveal(false) }}
         my={5}
         sx={{ ":hover": { cursor: 'pointer' } }}>
         <Grid
@@ -93,9 +97,14 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
           minWidth='180px'
           minHeight='180px'>
           {drinkInfo?.strDrinkThumb
-            ? <img width='100%' src={drinkInfo?.strDrinkThumb} alt="drikimage"
-              style={{ borderRadius: '40px 0px 0px' }} />
-            : <Skeleton width='100%' variant='rectangular' />}
+              ? <img
+                width='100%'
+                src={drinkInfo.strDrinkThumb}
+                alt="drikimage"
+                onLoad={() => setReveal(true)}
+                onError={() => setReveal(true)}
+                style={{ borderRadius: '40px 0px 0px' }} />
+              : <Skeleton width='100%' variant='rectangular' />}
         </Grid>
         <Grid
           item

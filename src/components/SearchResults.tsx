@@ -15,6 +15,7 @@ interface SearchResultsProps {
 const SearchResults: FunctionComponent<SearchResultsProps> = ({ coctails }) => {
   const listRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(1);
+  const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
   const RESULTSPERPAGE = 10;
 
 
@@ -23,6 +24,7 @@ const SearchResults: FunctionComponent<SearchResultsProps> = ({ coctails }) => {
       listRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
     setPage(1);
+    setSelectedRecipeId(null);
   }, [coctails]);
 
 
@@ -45,8 +47,17 @@ const SearchResults: FunctionComponent<SearchResultsProps> = ({ coctails }) => {
         pt={1}
         ref={listRef}>
         {coctails.length === 1
-          ? <CoctailRecipe id={coctails[0].idDrink} hideMe={null} />
-          : coctailSlice.map(drink => <DrindThumbnail key={drink.idDrink} drink={drink} />)}
+          ? <CoctailRecipe id={coctails[0].idDrink} onClose={null} />
+          : coctailSlice.map(drink => (
+            <DrindThumbnail
+              key={drink.idDrink}
+              drink={drink}
+              isSelected={selectedRecipeId === drink.idDrink}
+              onSelect={() => setSelectedRecipeId(drink.idDrink)}
+              onClose={() => setSelectedRecipeId(currentId =>
+                currentId === drink.idDrink ? null : currentId)}
+            />
+          ))}
       </Box>
       {coctails.length > RESULTSPERPAGE &&
         <Box py={5} width='fit-content' margin='auto'>
