@@ -19,8 +19,12 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, onClose }) =
       try {
         const result = await fetch(`${APIurl}lookup.php?i=${id}`);
         const data = await result.json();
+        const drink = data?.drinks?.[0];
 
-        const drink = data.drinks[0];
+        if (!drink) {
+          throw new Error('Drink lookup returned no results');
+        }
+
         setDrinkInfo(drink);
 
         if (!drink.strDrinkThumb)
