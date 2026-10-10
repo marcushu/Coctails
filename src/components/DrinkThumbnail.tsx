@@ -1,10 +1,13 @@
 import { Box, Typography } from "@mui/material";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { DrinkType, SearchResult } from "../types";
 import CoctailRecipe from "./CoctailRecipe";
 
 interface DrindThumbnailProps {
   drink: SearchResult | DrinkType
+  isSelected: boolean
+  onSelect: () => void
+  onClose: () => void
 }
 
 /**
@@ -12,20 +15,18 @@ interface DrindThumbnailProps {
  * or it's complete recipe with a full size image.
  * @param drink 
  */
-const DrindThumbnail: FunctionComponent<DrindThumbnailProps> = ({ drink }) => {
-  const [showDetails, setShowDetails] = useState(false);
-
+const DrindThumbnail: FunctionComponent<DrindThumbnailProps> = ({ drink, isSelected, onSelect, onClose }) => {
   return (
     <>
-      {showDetails
-        ? <CoctailRecipe id={drink.idDrink} hideMe={setShowDetails} />
+      {isSelected
+        ? <CoctailRecipe id={drink.idDrink} onClose={onClose} />
         : <Box
           display='flex'
           alignItems='flex-end'
           pb={4}
           pt={6}
           borderBottom='solid 1px #d1c5a55e'
-          onClick={() => setShowDetails(true)}
+          onClick={onSelect}
           sx={{ transition: 'transform 0.5s', ":hover": { cursor: 'pointer', transform: 'scale(1.03)' } }}>
           <Box sx={{
             backgroundImage: `url(${drink.strDrinkThumb}/preview)`,

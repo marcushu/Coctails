@@ -6,10 +6,10 @@ const APIurl = process.env.REACT_APP_COCTAIL_API
 
 interface CoctailRecipeProps {
   id: number
-  hideMe: React.Dispatch<React.SetStateAction<boolean>> | null
+  onClose: (() => void) | null
 }
 
-const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) => {
+const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, onClose }) => {
   const [drinkInfo, setDrinkInfo] = useState<DrinkType>();
   const [reveal, setReveal] = useState(false);
   const recipeRef = useRef<HTMLDivElement>(null);
@@ -74,8 +74,8 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
         recipeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     } else {
       setTimeout(() => { //FIXME: necessary?
-        if (hideMe)
-          hideMe(false); // remove the node
+        if (onClose)
+          onClose(); // remove the node
       }, 500);
     }
   }
@@ -87,7 +87,7 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
       addEndListener={afterTransition}>
       <Grid
         container
-        onClick={() => { if (hideMe) setReveal(false) }}
+        onClick={() => { if (onClose) setReveal(false) }}
         my={5}
         sx={{ ":hover": { cursor: 'pointer' } }}>
         <Grid
