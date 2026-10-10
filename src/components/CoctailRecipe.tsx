@@ -20,15 +20,19 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
         const result = await fetch(`${APIurl}lookup.php?i=${id}`);
         const data = await result.json();
 
-        setDrinkInfo(data.drinks[0]);
+        const drink = data.drinks[0];
+        setDrinkInfo(drink);
 
-        setReveal(true);
+        if (!drink.strDrinkThumb)
+          setReveal(true);
       } catch (error) {
         console.log(error);
         alert('Error collecting information about this coctail.');
       }
     }
 
+    setReveal(false);
+    setDrinkInfo(undefined);
     fetchCoctailInfo();
   }, [id]);
 
@@ -93,9 +97,14 @@ const CoctailRecipe: FunctionComponent<CoctailRecipeProps> = ({ id, hideMe }) =>
           minWidth='180px'
           minHeight='180px'>
           {drinkInfo?.strDrinkThumb
-            ? <img width='100%' src={drinkInfo?.strDrinkThumb} alt="drikimage"
-              style={{ borderRadius: '40px 0px 0px' }} />
-            : <Skeleton width='100%' variant='rectangular' />}
+              ? <img
+                width='100%'
+                src={drinkInfo.strDrinkThumb}
+                alt="drikimage"
+                onLoad={() => setReveal(true)}
+                onError={() => setReveal(true)}
+                style={{ borderRadius: '40px 0px 0px' }} />
+              : <Skeleton width='100%' variant='rectangular' />}
         </Grid>
         <Grid
           item
