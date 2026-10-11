@@ -21,6 +21,7 @@ const DrindThumbnail: FunctionComponent<DrindThumbnailProps> = ({ drink, isSelec
       {isSelected
         ? <CoctailRecipe id={drink.idDrink} onClose={onClose} />
         : <Box
+          data-testid="drink-result"
           display='flex'
           alignItems='flex-end'
           pb={4}
